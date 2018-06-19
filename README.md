@@ -72,3 +72,16 @@ if (isEnabled('XXX')) {
     // ...
 }
 ```
+
+#### Directive
+
+A [**directive**](https://vuejs.org/v2/guide/custom-directive.html) named `feature-flipping` works like `v-if`.
+If the feature is not enabled, the DOM is removed.
+
+```html
+<menu>
+    <entry>First</entry>
+    <entry>Second</entry>
+    <entry v-feature-flipping="'XXX'">Third</entry>
+</menu>
+```

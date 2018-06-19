@@ -1,3 +1,4 @@
+import { featureFlippingDirective } from './directive'
 import { setEnabledFeatures } from './service'
 
 /**
@@ -10,4 +11,5 @@ import { setEnabledFeatures } from './service'
  */
 export function featureFlippingPluginInstall (vue, options) {
   options && options.init && options.init((it) => setEnabledFeatures(it))
+  vue.directive('feature-flipping', featureFlippingDirective)
 }
