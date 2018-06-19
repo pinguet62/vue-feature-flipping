@@ -1,0 +1,18 @@
+{
+  "name": "vue-feature-flipping",
+  "description": "\"Feature flipping\" plugin for Vue.js",
+  "keywords": [
+    "vue",
+    "feature flipping"
+  ],
+  "author": "Pinguet62 <pinguet62@gmail.com>",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pinguet62/vue-feature-flipping.git"
+  },
+  "scripts": {
+  },
+  "devDependencies": {
+  }
+}
