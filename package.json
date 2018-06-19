@@ -20,6 +20,7 @@
     "jest": "^23.1.0",
     "sinon": "^6.0.0",
     "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.16"
   }
 }

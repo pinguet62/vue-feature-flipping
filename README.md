@@ -85,3 +85,19 @@ If the feature is not enabled, the DOM is removed.
     <entry v-feature-flipping="'XXX'">Third</entry>
 </menu>
 ```
+
+#### Route
+
+A [**guard**](https://router.vuejs.org/guide/advanced/navigation-guards.html) is defined to intercept all routes defining `featureFlipping` [**meta field**](https://router.vuejs.org/guide/advanced/meta.html).  
+If the feature is not enabled, the router redirect to `"/"` route.
+
+```javascript
+import VueRouter from 'vue-router'
+import TestComponent from './TestComponent'
+
+new VueRouter({
+    routes: [
+        { path: '/test', component: TestComponent, meta: { featureFlipping: 'XXX' } },
+    ]
+})
+```
