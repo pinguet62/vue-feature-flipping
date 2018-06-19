@@ -12,7 +12,13 @@
     "url": "https://github.com/pinguet62/vue-feature-flipping.git"
   },
   "scripts": {
+    "test": "jest"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.19",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^23.1.0",
+    "sinon": "^6.0.0",
+    "vue-template-compiler": "^2.5.16"
   }
 }
