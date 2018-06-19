@@ -1,5 +1,7 @@
 # vue-feature-flipping
 
+[![Build Status](https://travis-ci.org/pinguet62/vue-feature-flipping.svg?branch=master)](https://travis-ci.org/pinguet62/vue-feature-flipping) 
+
 [Vue.js](https://vuejs.org) plugin providing a set of components used to introduce ["feature flipping"](https://en.wikipedia.org/wiki/Feature_toggle) into your project.
 
 ## Why use this plugin?
