@@ -19,6 +19,7 @@
     "babel-preset-es2015": "^6.24.1",
     "jest": "^23.1.0",
     "sinon": "^6.0.0",
+    "vue": "^2.5.16",
     "vue-template-compiler": "^2.5.16"
   }
 }
