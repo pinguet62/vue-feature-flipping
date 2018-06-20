@@ -70,7 +70,11 @@ If the feature is not enabled, the function returns `false`.
 ```javascript
 import { isEnabled } from 'vue-feature-flipping'
 
-if (isEnabled('XXX')) {
+if (isEnabled('XXXXX')) {
+    // ...
+}
+
+if (isEnabled('XXXXX', true)) {
     // ...
 }
 ```
@@ -83,8 +87,9 @@ If the feature is not enabled, the DOM is removed.
 ```html
 <menu>
     <entry>First</entry>
-    <entry>Second</entry>
-    <entry v-feature-flipping="'XXX'">Third</entry>
+    <entry v-feature-flipping="'XXXXX'">Second</entry>
+    <entry v-feature-flipping="{ key: 'XXXXX' }">Third</entry>
+    <entry v-feature-flipping="{ key: 'XXXXX', default: true }">Fourth</entry>
 </menu>
 ```
 
@@ -95,11 +100,33 @@ If the feature is not enabled, the router redirect to `"/"` route.
 
 ```javascript
 import VueRouter from 'vue-router'
-import TestComponent from './TestComponent'
+import { TestComponent1, TestComponent2, TestComponent3 } from '...'
 
 new VueRouter({
     routes: [
-        { path: '/test', component: TestComponent, meta: { featureFlipping: 'XXX' } },
+        { path: '/test1', component: Test1Component, meta: { featureFlipping: 'XXXXX' } },
+        { path: '/test2', component: Test2Component, meta: { featureFlipping: { key: 'XXXXX' } } },
+        { path: '/test2', component: Test3Component, meta: { featureFlipping: { key: 'XXXXX', default: true } } },
     ]
+})
+```
+
+## Default behavior
+
+When the plugin is *not initialized*, or when any *error occurs* when user try to initialize this plugin, it's necessary to define a **default behavior**: should we activate the function or should we disable it?
+
+The **default value** defines this behavior: the value is used when plugin is not initialized or initialized with `null`.
+
+Example:
+```javascript
+Vue.use(FeatureFlipping, {
+    init: async (consumer) => {
+        try {
+            let features = await getFeaturesFromBackend()
+            consumer(features)
+        } catch (e) {
+            consumer(null) // use default
+        }
+    }
 })
 ```
