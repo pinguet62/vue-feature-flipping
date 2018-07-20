@@ -1,5 +1,6 @@
 # vue-feature-flipping
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70c3d26abe2047a3a6ca0183ec73421b)](https://app.codacy.com/app/pinguet62/vue-feature-flipping?utm_source=github.com&utm_medium=referral&utm_content=pinguet62/vue-feature-flipping&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/pinguet62/vue-feature-flipping.svg?branch=master)](https://travis-ci.org/pinguet62/vue-feature-flipping) 
 
 [Vue.js](https://vuejs.org) plugin providing a set of components used to introduce ["feature flipping"](https://en.wikipedia.org/wiki/Feature_toggle) into your project.
