@@ -1,5 +1,11 @@
 language: node_js
 node_js: "node"
 
+before_install:
+  - npm install --global codacy-coverage
+
 # install: npm install
 # script: npm test
+
+after_success:
+  - cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN
