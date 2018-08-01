@@ -1,0 +1,13 @@
+/*
+---
+name: vue-feature-flipping - Demo
+description: Sample
+authors:
+  - Pinguet62
+resources:
+  - https://unpkg.com/vue/dist/vue.js
+  - https://unpkg.com/vue-router/dist/vue-router.js
+  - https://rawgit.com/pinguet62/vue-feature-flipping/master/dist/main.js
+js_wrap: d
+...
+*/

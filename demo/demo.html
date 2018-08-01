@@ -1,0 +1,55 @@
+<div id="app" v-if="refresh">
+    <h1>Vue Feature Flipping</h1>
+
+    <div>
+        <button @click="setFeatures(null)">OFF</button>
+        <button @click="setFeatures([])">DISABLED</button>
+        <button @click="setFeatures(['FEAT'])">ENABLED</button>
+    </div>
+
+    <div>
+        <h2>Service <code>isEnabled()</code></h2>
+
+        <div v-if="isEnabled('FEAT')">
+            <code>&lt;div v-if=&quot;isEnabled('FEAT')&quot;&gt;</code>
+        </div>
+        <div v-if="isEnabled('FEAT', false)">
+            <code>&lt;div v-if=&quot;isEnabled('FEAT', false)&quot;&gt;</code>
+        </div>
+        <div v-if="isEnabled('FEAT', true)">
+            <code>&lt;div v-if=&quot;isEnabled('FEAT', true)&quot;&gt;</code>
+        </div>
+    </div>
+
+    <div>
+        <h2>Render DOM (like <code>v-if</code>)</h2>
+
+        <div v-feature-flipping="'FEAT'">
+            <code>&lt;div v-feature-flipping=&quot;'FEAT'&quot;&gt;</code>
+        </div>
+
+        <div v-feature-flipping="{ key: 'FEAT' }">
+            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT' }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping="{ key: 'FEAT', default: false }">
+            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT', default: false }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping="{ key: 'FEAT', default: true }">
+            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT', default: true }&quot;&gt;</code>
+        </div>
+    </div>
+
+    <div>
+        <h2>Apply <code>class</code> (like <code>v-bind:class</code>)</h2>
+
+        <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'] }">
+            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'] }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'], default: false }">
+            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'], default: false }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'], default: true }">
+            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'], default: true }&quot;&gt;</code>
+        </div>
+    </div>
+</div>
