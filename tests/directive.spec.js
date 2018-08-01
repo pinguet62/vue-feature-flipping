@@ -1,6 +1,6 @@
 import { createLocalVue, mount } from '@vue/test-utils'
 import { createSandbox } from 'sinon'
-import FeatureFlipping from '..'
+import FeatureFlipping from '../src'
 import * as service from '../src/service' // internal
 
 describe('directive', () => {

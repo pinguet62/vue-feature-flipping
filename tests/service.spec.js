@@ -1,4 +1,4 @@
-import { isEnabled, setEnabledFeatures } from '..'
+import { isEnabled, setEnabledFeatures } from '../src'
 
 describe('service', () => {
   it('Should return if the key is into enabled keys', () => {

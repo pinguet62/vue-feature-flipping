@@ -1,7 +1,7 @@
 import { createLocalVue } from '@vue/test-utils'
 import { createSandbox } from 'sinon'
 import VueRouter from 'vue-router'
-import FeatureFlipping from '..'
+import FeatureFlipping from '../src'
 import * as service from '../src/service' // internal
 
 describe('guard', () => {

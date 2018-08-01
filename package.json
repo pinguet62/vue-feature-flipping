@@ -12,7 +12,8 @@
     "url": "https://github.com/pinguet62/vue-feature-flipping.git"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "webpack --mode production --output-library VueFeatureFlipping --output-library-target window"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.24",
@@ -21,6 +22,8 @@
     "sinon": "^6.1.4",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
   }
 }
