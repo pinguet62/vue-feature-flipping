@@ -95,6 +95,15 @@ If the feature is not enabled, the DOM is removed.
 </menu>
 ```
 
+The argument `class` allow the directive to work like `v-bind:class`. If the feature is enabled, the classes are apply to element.
+
+```html
+<menu>
+    <entry>First</entry>
+    <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', 'class2'], default: true }">Second</entry>
+</menu>
+```
+
 #### Route
 
 A [**guard**](https://router.vuejs.org/guide/advanced/navigation-guards.html) is defined to intercept all routes defining `featureFlipping` [**meta field**](https://router.vuejs.org/guide/advanced/meta.html).  
