@@ -141,3 +141,8 @@ Vue.use(FeatureFlipping, {
     }
 })
 ```
+
+## Best practices
+
+* **Independent** - Avoid behavior depending multiples features.  
+    Bad: `if (isEnabled('F1') && isEnabled('F2') || isEnabled('F3')) ...`
