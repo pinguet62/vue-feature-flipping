@@ -91,7 +91,8 @@ If the feature is not enabled, the DOM is removed.
 <menu>
     <entry>First</entry>
     <entry v-feature-flipping="'XXXXX'">Second</entry>
-    <entry v-feature-flipping.default="'XXXXX'">Third</entry>
+    <entry v-feature-flipping.not="'XXXXX'">Third</entry>
+    <entry v-feature-flipping.default="'XXXXX'">Fourth</entry>
 </menu>
 ```
 
@@ -101,7 +102,8 @@ The argument `class` allow the directive to work like `v-bind:class`. If the fea
 <menu>
     <entry>First</entry>
     <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', 'class2'] }">Second</entry>
-    <entry v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', 'class2'] }">Third</entry>
+    <entry v-feature-flipping:class.not="{ key: 'XXXXX', value: ['class1', 'class2'] }">Third</entry>
+    <entry v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', 'class2'] }">Fourth</entry>
 </menu>
 ```
 
@@ -111,7 +113,8 @@ The argument `style` allow the directive to work like `v-bind:style`. If the fea
 <menu>
     <entry>First</entry>
     <entry v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Second</entry>
-    <entry v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Third</entry>
+    <entry v-feature-flipping:style.not="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Third</entry>
+    <entry v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Fourth</entry>
 </menu>
 ```
 
@@ -122,18 +125,20 @@ If the feature is not enabled, the router redirect to `"/"` route.
 
 ```javascript
 import VueRouter from 'vue-router'
-import { TestComponent1, TestComponent2, TestComponent3 } from '...'
+import { Test1Component, Test2Component, Test3Component } from '...'
 
 new VueRouter({
     routes: [
-        { path: '/test1', component: Test1Component, meta: { featureFlipping: 'XXXXX' } },
-        { path: '/test2', component: Test2Component, meta: { featureFlipping: { key: 'XXXXX' } } },
-        { path: '/test2', component: Test3Component, meta: { featureFlipping: { key: 'XXXXX', default: true } } },
+        { path: '/test1', component: Test1Component, meta: { featureFlipping: { key: 'XXXXX' } } },
+        { path: '/test2', component: Test2Component, meta: { featureFlipping: { key: 'XXXXX', not: true } } },
+        { path: '/test3', component: Test3Component, meta: { featureFlipping: { key: 'XXXXX', default: true } } },
     ]
 })
 ```
 
-## Default behavior
+## Options
+
+### `default`: default behavior
 
 When the plugin is *not initialized*, or when any *error occurs* when user try to initialize this plugin, it's necessary to define a **default behavior**: should we activate the function or should we disable it?
 
@@ -152,6 +157,12 @@ Vue.use(FeatureFlipping, {
     }
 })
 ```
+
+### `not`: reversed rendering
+
+In some cases, we have to define a behavior when the feature is disabled.
+
+The `not` option activate this behavior.
 
 ## Best practices
 

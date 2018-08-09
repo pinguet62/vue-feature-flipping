@@ -1,16 +1,8 @@
 import { createLocalVue } from '@vue/test-utils'
-import { createSandbox } from 'sinon'
 import VueRouter from 'vue-router'
-import FeatureFlipping from '../src'
-import * as service from '../src/service' // internal
+import FeatureFlipping, { setEnabledFeatures } from '../src'
 
 describe('guard', () => {
-  const sinon = createSandbox()
-  afterEach(() => sinon.restore())
-
-  let isEnabledFn
-  beforeEach(() => isEnabledFn = sinon.stub(service, 'isEnabled'))
-
   let localVue
   let router
   beforeEach(() => {
@@ -19,9 +11,10 @@ describe('guard', () => {
     router = new VueRouter({
       routes: [
         {path: '/', name: 'index', component: {render: () => 'index'}},
-        {path: '/stable', name: 'stable', component: {render: () => 'stable'}},
-        {path: '/test', name: 'test', component: {render: () => 'test'}, meta: {featureFlipping: 'KEY'}},
-        {path: '/complex', name: 'complex', component: {render: () => 'complex'}, meta: {featureFlipping: {key: 'KEY', default: true}}}
+        {path: '/undefined', name: 'undefined', component: {render: () => 'undefined'}},
+        {path: '/simple', name: 'simple', component: {render: () => 'simple'}, meta: {featureFlipping: {key: 'KEY'}}},
+        {path: '/not', name: 'not', component: {render: () => 'not'}, meta: {featureFlipping: {key: 'KEY', not: true}}},
+        {path: '/default', name: 'default', component: {render: () => 'default'}, meta: {featureFlipping: {key: 'KEY', default: true}}},
       ],
     })
 
@@ -29,40 +22,69 @@ describe('guard', () => {
   })
 
   it('\'meta\' not defined: should accept route', async () => {
-    router.push({name: 'stable'})
+    router.push({name: 'undefined'})
     await localVue.nextTick()
 
-    expect(router.history.current.path).toEqual('/stable')
+    expect(router.history.current.path).toEqual('/undefined')
   })
 
-  describe('\'meta\' defined: should test using "isEnabled()"', () => {
-    it('\'enabled\': should accept route', async () => {
-      isEnabledFn.withArgs('KEY').returns(true)
+  describe('"meta" defined: should test using "isEnabled()"', () => {
+    it('When enabled: should accept route', async () => {
+      setEnabledFeatures(['KEY'])
 
-      router.push({name: 'test'})
+      router.push({name: 'simple'})
       await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/test')
+      expect(router.history.current.path).toEqual('/simple')
     })
 
-    it('\'not enabled\': should redirect to "/"', async () => {
-      isEnabledFn.withArgs('KEY').returns(false)
+    it('When disabled: should redirect to "/"', async () => {
+      setEnabledFeatures([])
 
-      router.push({name: 'test'})
+      router.push({name: 'simple'})
+      await localVue.nextTick()
+
+      expect(router.history.current.path).toEqual('/')
+    })
+  })
+
+  describe('Option "not" should reverse result', () => {
+    it('When enabled: should redirect to "/"', async () => {
+      setEnabledFeatures(['KEY'])
+
+      router.push({name: 'not'})
       await localVue.nextTick()
 
       expect(router.history.current.path).toEqual('/')
     })
 
-    it('Complex object "{key: string, default: boolean}"', async () => {
-      let isEnabledSFn = isEnabledFn
-        .withArgs('KEY', true) // see routes
-        .returns(true)
+    it('When disabled: should accept route', async () => {
+      setEnabledFeatures([])
 
-      router.push({name: 'complex'})
+      router.push({name: 'not'})
       await localVue.nextTick()
 
-      expect(isEnabledSFn.called).toEqual(true)
+      expect(router.history.current.path).toEqual('/not')
+    })
+  })
+
+  describe('Option "default" should be used when uninitialized', () => {
+    it('When defined: should accept (or not) routing', async () => {
+      setEnabledFeatures(null)
+
+      router.push({name: 'default'})
+      await localVue.nextTick()
+
+      expect(router.history.current.path).toEqual('/default')
+    })
+
+    it('When not defined: should redirect to "/"', async () => {
+      setEnabledFeatures(null)
+
+      router.push({name: 'simple'})
+      await localVue.nextTick()
+
+      expect(router.history.current.path).toEqual('/')
     })
   })
 })

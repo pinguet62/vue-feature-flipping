@@ -37,6 +37,13 @@ describe('directive', () => {
       await runTestAndExpectation(`v-feature-flipping="'DISABLED'"`, false)
     })
 
+    it('Should reverse rendering when ".not" modifier', async () => {
+      setEnabledFeatures(['ENABLED'])
+
+      await runTestAndExpectation(`v-feature-flipping.not="'ENABLED'"`, false)
+      await runTestAndExpectation(`v-feature-flipping.not="'DISABLED'"`, true)
+    })
+
     it('Should render when ".default" modifier', async () => {
       setEnabledFeatures(null)
 
@@ -63,6 +70,17 @@ describe('directive', () => {
       expect(vm1.classes()).toContain('BB')
 
       let vm2 = await runTest(`v-feature-flipping:class="{ key: 'DISABLED', value: ['CC'] }"`)
+      expect(vm2.classes()).not.toContain('CC')
+    })
+
+    it('Should reverse rendering when ".not" modifier', async () => {
+      setEnabledFeatures(['ENABLED'])
+
+      let vm1 = await runTest(`v-feature-flipping:class.not="{ key: 'DISABLED', value: ['AA', 'BB'] }"`)
+      expect(vm1.classes()).toContain('AA')
+      expect(vm1.classes()).toContain('BB')
+
+      let vm2 = await runTest(`v-feature-flipping:class.not="{ key: 'ENABLED', value: ['CC'] }"`)
       expect(vm2.classes()).not.toContain('CC')
     })
 
@@ -96,6 +114,17 @@ describe('directive', () => {
       expect(vm1.element.style.margin).toBe('5px')
 
       let vm2 = await runTest(`v-feature-flipping:style="{ key: 'DISABLED', value: { display: 'none' } }"`)
+      expect(vm2.element.style.display).not.toBe('none')
+    })
+
+    it('Should reverse rendering when ".not" modifier', async () => {
+      setEnabledFeatures(['ENABLED'])
+
+      let vm1 = await runTest(`v-feature-flipping:style.not="{ key: 'DISABLED', value: { color: 'green', margin: '5px' } }"`)
+      expect(vm1.element.style.color).toBe('green')
+      expect(vm1.element.style.margin).toBe('5px')
+
+      let vm2 = await runTest(`v-feature-flipping:style.not="{ key: 'ENABLED', value: { display: 'none' } }"`)
       expect(vm2.element.style.display).not.toBe('none')
     })
 
