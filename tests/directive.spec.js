@@ -73,4 +73,17 @@ describe('directive', () => {
       expect(vm.classes()).not.toContain('CC')
     })
   })
+
+  describe('style', () => {
+    it('Should append style according to the "isEnabled" result', async () => {
+      isEnabledFn.withArgs('ENABLED').returns(true)
+      const vm = mount(
+        {template: `<div v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green' }, default: true }"></div>`},
+        {localVue}
+      )
+      await localVue.nextTick()
+
+      expect(vm.hasStyle('color', 'green')).toBe(true)
+    })
+  })
 })

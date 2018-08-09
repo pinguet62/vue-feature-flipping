@@ -52,4 +52,18 @@
             <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'], default: true }&quot;&gt;</code>
         </div>
     </div>
+
+    <div>
+        <h2>Apply <code>style</code> (like <code>v-bind:style</code>)</h2>
+
+        <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' } }">
+            <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' } }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' }, default: false }">
+            <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' }, default: false }&quot;&gt;</code>
+        </div>
+        <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' }, default: true }">
+            <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' }, default: true }&quot;&gt;</code>
+        </div>
+    </div>
 </div>

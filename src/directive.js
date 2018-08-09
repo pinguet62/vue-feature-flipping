@@ -6,6 +6,9 @@ export async function featureFlippingDirective (el, binding, vnode, oldVnode) {
     case 'class':
       await renderClasses(el, binding, vnode, oldVnode)
       break
+    case 'style':
+      await renderStyles(el, binding, vnode, oldVnode)
+      break
     default:
       await renderDOM(el, binding, vnode, oldVnode)
   }
@@ -36,5 +39,20 @@ async function renderClasses (el, binding, vnode, oldVnode) {
   let {key, value, default: defaut} = binding.value
   if (isEnabled(key, defaut)) {
     el.className += ' ' + value.join(' ')
+  }
+}
+
+/**
+ * @param {{key: string, value: Object.<string, string>, default: boolean}) binding.value
+ * @example
+ * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
+ * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }, default: true }">...</div>
+ */
+async function renderStyles (el, binding, vnode, oldVnode) {
+  let {key, value, default: defaut} = binding.value
+  if (isEnabled(key, defaut)) {
+    for (let [styleName, styleValue] of Object.entries(value)) {
+      el.style.setProperty(styleName, styleValue)
+    }
   }
 }

@@ -105,6 +105,15 @@ The argument `class` allow the directive to work like `v-bind:class`. If the fea
 </menu>
 ```
 
+The argument `style` allow the directive to work like `v-bind:style`. If the feature is enabled, the styles are apply to element.
+
+```html
+<menu>
+    <entry>First</entry>
+    <entry v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }, default: true }">Second</entry>
+</menu>
+```
+
 #### Route
 
 A [**guard**](https://router.vuejs.org/guide/advanced/navigation-guards.html) is defined to intercept all routes defining `featureFlipping` [**meta field**](https://router.vuejs.org/guide/advanced/meta.html).  
