@@ -5,7 +5,10 @@ before_install:
   - npm install --global codacy-coverage
 
 # install: npm install
-# script: npm test
+
+script:
+  - npm run lint
+  - npm test
 
 after_success:
   - cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN

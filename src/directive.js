@@ -1,16 +1,16 @@
 import { isEnabled } from './service'
 import { parseParameter } from './utils'
 
-export async function featureFlippingDirective (el, binding, vnode, oldVnode) {
+export async function featureFlippingDirective (el, binding, vnode) {
   switch (binding.arg) {
     case 'class':
-      await renderClasses(el, binding, vnode, oldVnode)
+      await renderClasses(el, binding)
       break
     case 'style':
-      await renderStyles(el, binding, vnode, oldVnode)
+      await renderStyles(el, binding)
       break
     default:
-      await renderDOM(el, binding, vnode, oldVnode)
+      await renderDOM(el, binding, vnode)
   }
 }
 
@@ -21,7 +21,7 @@ export async function featureFlippingDirective (el, binding, vnode, oldVnode) {
  * <div v-feature-flipping="{ key: 'XXXXX' }">...</div>
  * <div v-feature-flipping="{ key: 'XXXXX', default: true }">...</div>
  */
-async function renderDOM (el, binding, vnode, oldVnode) {
+async function renderDOM (el, binding, vnode) {
   let [key, defaut] = parseParameter(binding.value)
   if (!isEnabled(key, defaut)) {
     await vnode.context.$nextTick()
@@ -35,7 +35,7 @@ async function renderDOM (el, binding, vnode, oldVnode) {
  * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
  * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'], default: true }">...</div>
  */
-async function renderClasses (el, binding, vnode, oldVnode) {
+async function renderClasses (el, binding) {
   let {key, value, default: defaut} = binding.value
   if (isEnabled(key, defaut)) {
     el.className += ' ' + value.join(' ')
@@ -48,7 +48,7 @@ async function renderClasses (el, binding, vnode, oldVnode) {
  * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
  * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }, default: true }">...</div>
  */
-async function renderStyles (el, binding, vnode, oldVnode) {
+async function renderStyles (el, binding) {
   let {key, value, default: defaut} = binding.value
   if (isEnabled(key, defaut)) {
     for (let [styleName, styleValue] of Object.entries(value)) {
