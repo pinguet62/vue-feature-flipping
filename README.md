@@ -91,8 +91,7 @@ If the feature is not enabled, the DOM is removed.
 <menu>
     <entry>First</entry>
     <entry v-feature-flipping="'XXXXX'">Second</entry>
-    <entry v-feature-flipping="{ key: 'XXXXX' }">Third</entry>
-    <entry v-feature-flipping="{ key: 'XXXXX', default: true }">Fourth</entry>
+    <entry v-feature-flipping.default="'XXXXX'">Third</entry>
 </menu>
 ```
 
@@ -101,7 +100,8 @@ The argument `class` allow the directive to work like `v-bind:class`. If the fea
 ```html
 <menu>
     <entry>First</entry>
-    <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', 'class2'], default: true }">Second</entry>
+    <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', 'class2'] }">Second</entry>
+    <entry v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', 'class2'] }">Third</entry>
 </menu>
 ```
 
@@ -110,7 +110,8 @@ The argument `style` allow the directive to work like `v-bind:style`. If the fea
 ```html
 <menu>
     <entry>First</entry>
-    <entry v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }, default: true }">Second</entry>
+    <entry v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Second</entry>
+    <entry v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }}">Third</entry>
 </menu>
 ```
 

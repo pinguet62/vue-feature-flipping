@@ -1,5 +1,4 @@
 import { isEnabled } from './service'
-import { parseParameter } from './utils'
 
 export async function featureFlippingDirective (el, binding, vnode) {
   switch (binding.arg) {
@@ -15,14 +14,15 @@ export async function featureFlippingDirective (el, binding, vnode) {
 }
 
 /**
- * @param {(string|{key: string, default: boolean})} binding.value
+ * @param {string} binding.value
  * @example
  * <div v-feature-flipping="'XXXXX'">...</div>
- * <div v-feature-flipping="{ key: 'XXXXX' }">...</div>
- * <div v-feature-flipping="{ key: 'XXXXX', default: true }">...</div>
+ * <div v-feature-flipping.default="'XXXXX'">...</div>
  */
 async function renderDOM (el, binding, vnode) {
-  let [key, defaut] = parseParameter(binding.value)
+  let key = binding.value
+  let {default: defaut} = binding.modifiers
+
   if (!isEnabled(key, defaut)) {
     await vnode.context.$nextTick()
     vnode.elm.remove()
@@ -30,26 +30,30 @@ async function renderDOM (el, binding, vnode) {
 }
 
 /**
- * @param {{key: string, value: string[], default: boolean}) binding.value
+ * @param {{key: string, value: string[]}) binding.value
  * @example
  * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
- * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'], default: true }">...</div>
+ * <div v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
  */
 async function renderClasses (el, binding) {
-  let {key, value, default: defaut} = binding.value
+  let {key, value} = binding.value
+  let {default: defaut} = binding.modifiers
+
   if (isEnabled(key, defaut)) {
     el.className += ' ' + value.join(' ')
   }
 }
 
 /**
- * @param {{key: string, value: Object.<string, string>, default: boolean}) binding.value
+ * @param {{key: string, value: Object.<string, string>}) binding.value
  * @example
  * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
- * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' }, default: true }">...</div>
+ * <div v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
  */
 async function renderStyles (el, binding) {
-  let {key, value, default: defaut} = binding.value
+  let {key, value} = binding.value
+  let {default: defaut} = binding.modifiers
+
   if (isEnabled(key, defaut)) {
     for (let [styleName, styleValue] of Object.entries(value)) {
       el.style.setProperty(styleName, styleValue)

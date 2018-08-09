@@ -27,15 +27,8 @@
         <div v-feature-flipping="'FEAT'">
             <code>&lt;div v-feature-flipping=&quot;'FEAT'&quot;&gt;</code>
         </div>
-
-        <div v-feature-flipping="{ key: 'FEAT' }">
-            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT' }&quot;&gt;</code>
-        </div>
-        <div v-feature-flipping="{ key: 'FEAT', default: false }">
-            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT', default: false }&quot;&gt;</code>
-        </div>
-        <div v-feature-flipping="{ key: 'FEAT', default: true }">
-            <code>&lt;div v-feature-flipping=&quot;{ key: 'FEAT', default: true }&quot;&gt;</code>
+        <div v-feature-flipping.default="'FEAT'">
+            <code>&lt;div v-feature-flipping.default=&quot;'FEAT'&quot;&gt;</code>
         </div>
     </div>
 
@@ -43,13 +36,10 @@
         <h2>Apply <code>class</code> (like <code>v-bind:class</code>)</h2>
 
         <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'] }">
-            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'] }&quot;&gt;</code>
+            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['enabled'] }&quot;&gt;</code>
         </div>
-        <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'], default: false }">
-            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'], default: false }&quot;&gt;</code>
-        </div>
-        <div v-feature-flipping:class="{ key: 'FEAT', value: ['enabled'], default: true }">
-            <code>&lt;div v-feature-flipping:class=&quot;{ key: 'FEAT', value: ['AA', 'BB'], default: true }&quot;&gt;</code>
+        <div v-feature-flipping:class.default="{ key: 'FEAT', value: ['enabled'] }">
+            <code>&lt;div v-feature-flipping:class.default=&quot;{ key: 'FEAT', value: ['enabled'] }&quot;&gt;</code>
         </div>
     </div>
 
@@ -59,11 +49,8 @@
         <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' } }">
             <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' } }&quot;&gt;</code>
         </div>
-        <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' }, default: false }">
-            <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' }, default: false }&quot;&gt;</code>
-        </div>
-        <div v-feature-flipping:style="{ key: 'FEAT', value: { color: 'green' }, default: true }">
-            <code>&lt;div v-feature-flipping:style=&quot;{ key: 'FEAT', value: { color: 'green' }, default: true }&quot;&gt;</code>
+        <div v-feature-flipping:style.default="{ key: 'FEAT', value: { color: 'green' } }">
+            <code>&lt;div v-feature-flipping:style.default=&quot;{ key: 'FEAT', value: { color: 'green' } }&quot;&gt;</code>
         </div>
     </div>
 </div>
