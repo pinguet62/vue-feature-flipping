@@ -84,8 +84,11 @@ if (isEnabled('XXXXX', true)) {
 
 #### Directive
 
-A [**directive**](https://vuejs.org/v2/guide/custom-directive.html) named `feature-flipping` works like `v-if`.
-If the feature is not enabled, the DOM is removed.
+A [**directive**](https://vuejs.org/v2/guide/custom-directive.html) named `feature-flipping` can be used into `<template>`.
+
+##### Rendering
+
+Without argument, the directive works like `v-if`. If the feature is not enabled, the DOM is removed.
 
 ```html
 <menu>
@@ -96,16 +99,21 @@ If the feature is not enabled, the DOM is removed.
 </menu>
 ```
 
+##### Class
+
 The argument `class` allow the directive to work like `v-bind:class`. If the feature is enabled, the classes are apply to element.
 
 ```html
 <menu>
     <entry>First</entry>
-    <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', 'class2'] }">Second</entry>
-    <entry v-feature-flipping:class.not="{ key: 'XXXXX', value: ['class1', 'class2'] }">Third</entry>
-    <entry v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', 'class2'] }">Fourth</entry>
+    <entry v-feature-flipping:class="{ key: 'XXXXX', value: 'class1' }">Second</entry>
+    <entry v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', ['class2'], { 'class3': true }] }">Third</entry>
+    <entry v-feature-flipping:class.not="{ key: 'XXXXX', value: 'class1' }">Fourth</entry>
+    <entry v-feature-flipping:class.default="{ key: 'XXXXX', value: 'class1' }">Fifth</entry>
 </menu>
 ```
+
+##### Style
 
 The argument `style` allow the directive to work like `v-bind:style`. If the feature is enabled, the styles are apply to element.
 

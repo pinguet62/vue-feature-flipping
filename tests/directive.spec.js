@@ -65,34 +65,55 @@ describe('directive', () => {
     it('Should append class according to the "isEnabled" result', async () => {
       setEnabledFeatures(['ENABLED'])
 
-      let vm1 = await runTest(`v-feature-flipping:class="{ key: 'ENABLED', value: ['AA', 'BB'] }"`)
-      expect(vm1.classes()).toContain('AA')
-      expect(vm1.classes()).toContain('BB')
+      let vm1 = await runTest(`v-feature-flipping:class="{ key: 'ENABLED', value: 'XXXXX' }"`)
+      expect(vm1.classes()).toContain('XXXXX')
 
-      let vm2 = await runTest(`v-feature-flipping:class="{ key: 'DISABLED', value: ['CC'] }"`)
-      expect(vm2.classes()).not.toContain('CC')
+      let vm2 = await runTest(`v-feature-flipping:class="{ key: 'DISABLED', value: ['XXXXX'] }"`)
+      expect(vm2.classes()).not.toContain('XXXXX')
     })
 
     it('Should reverse rendering when ".not" modifier', async () => {
       setEnabledFeatures(['ENABLED'])
 
-      let vm1 = await runTest(`v-feature-flipping:class.not="{ key: 'DISABLED', value: ['AA', 'BB'] }"`)
-      expect(vm1.classes()).toContain('AA')
-      expect(vm1.classes()).toContain('BB')
+      let vm1 = await runTest(`v-feature-flipping:class.not="{ key: 'DISABLED', value: 'XXXXX' }"`)
+      expect(vm1.classes()).toContain('XXXXX')
 
-      let vm2 = await runTest(`v-feature-flipping:class.not="{ key: 'ENABLED', value: ['CC'] }"`)
-      expect(vm2.classes()).not.toContain('CC')
+      let vm2 = await runTest(`v-feature-flipping:class.not="{ key: 'ENABLED', value: 'XXXXX' }"`)
+      expect(vm2.classes()).not.toContain('XXXXX')
     })
 
     it('Should render when ".default" modifier', async () => {
       setEnabledFeatures(null)
 
-      let vm1 = await runTest(`v-feature-flipping:class.default="{ key: 'ANY', value: ['AA', 'BB'] }"`)
-      expect(vm1.classes()).toContain('AA')
-      expect(vm1.classes()).toContain('BB')
+      let vm1 = await runTest(`v-feature-flipping:class.default="{ key: 'ANY', value: 'XXXXX' }"`)
+      expect(vm1.classes()).toContain('XXXXX')
 
-      let vm2 = await runTest(`v-feature-flipping:class="{ key: 'ANY', value: ['CC'] }"`)
-      expect(vm2.classes()).not.toContain('CC')
+      let vm2 = await runTest(`v-feature-flipping:class="{ key: 'ANY', value: 'XXXXX' }"`)
+      expect(vm2.classes()).not.toContain('XXXXX')
+    })
+
+    it('Should support complex parameter ("v-bind:class" syntax)', async () => {
+      setEnabledFeatures(['ENABLED'])
+
+      // string
+      let vm1 = await runTest(`v-feature-flipping:class.default="{ key: 'ENABLED', value: 'XXXXX' }"`)
+      expect(vm1.classes()).toContain('XXXXX')
+
+      // string[]
+      let vm2 = await runTest(`v-feature-flipping:class.default="{ key: 'ENABLED', value: [ 'AAAAA', 'BBBBB' ] }"`)
+      expect(vm2.classes()).toContain('AAAAA')
+      expect(vm2.classes()).toContain('BBBBB')
+
+      // Object.<string,boolean>
+      let vm3 = await runTest(`v-feature-flipping:class.default="{ key: 'ENABLED', value: { 'AAAAA': true, 'BBBBB': false } }"`)
+      expect(vm3.classes()).toContain('AAAAA')
+      expect(vm3.classes()).not.toContain('BBBBB')
+
+      // Array.<string|string[]|Object.<string,boolean>>
+      let vm4 = await runTest(`v-feature-flipping:class.default="{ key: 'ENABLED', value: [ 'AAAAA', ['BBBBB'], { 'CCCCC': true } ] }"`)
+      expect(vm4.classes()).toContain('AAAAA')
+      expect(vm4.classes()).toContain('BBBBB')
+      expect(vm4.classes()).toContain('CCCCC')
     })
   })
 

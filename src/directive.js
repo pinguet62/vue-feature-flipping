@@ -31,18 +31,40 @@ async function renderDOM (el, binding, vnode) {
 }
 
 /**
- * @param {{key: string, value: string[]}) binding.value
+ * @param {{key: string, value: *}) binding.value
  * @example
+ * <div v-feature-flipping:class="{ key: 'XXXXX', value: 'class1' }">...</div>
  * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
- * <div v-feature-flipping:class.not="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
- * <div v-feature-flipping:class.default="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
+ * <div v-feature-flipping:class="{ key: 'XXXXX', value: { class1: active1 } }">...</div>
+ * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', ['class2'], { class3: active3 }] }">...</div>
+ * <div v-feature-flipping:class.not="{ key: 'XXXXX', value: 'class1' }">...</div>
+ * <div v-feature-flipping:class.default="{ key: 'XXXXX', value: 'class1' }">...</div>
  */
 async function renderClasses (el, binding) {
   let {key, value} = binding.value
   let {default: defaut, not = false} = binding.modifiers
 
   if (not ^ isEnabled(key, defaut)) {
-    el.className += ' ' + value.join(' ')
+    el.className += ' ' + parseClasses(value).join(' ')
+  }
+}
+
+/**
+ * @param {string|string[]|Array.<string|string[]|Object.<string,boolean>>} value
+ * @return {string[]}
+ */
+function parseClasses (value) {
+  if (typeof value === 'string') {
+    return [value]
+  } else if (Array.isArray(value)) {
+    return value.map(it => parseClasses(it))
+      .reduce((acc, arr) => [...acc, ...arr], []) // Array.flat()
+  } else if (typeof value === 'object') {
+    return Object.entries(value)
+      .filter(([, value]) => !!value)
+      .map(([key,]) => key)
+  } else {
+    throw new Error('Invalid parameter type')
   }
 }
 
