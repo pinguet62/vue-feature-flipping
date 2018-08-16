@@ -159,5 +159,18 @@ describe('directive', () => {
       let vm2 = await runTest(`v-feature-flipping:style="{ key: 'ANY', value: { display: 'none' } }"`)
       expect(vm2.element.style.display).not.toBe('none')
     })
+
+    it('Should support complex parameter ("v-bind:style" syntax)', async () => {
+      setEnabledFeatures(['ENABLED'])
+
+      // Object.<string,string>
+      let vm1 = await runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green' } }"`)
+      expect(vm1.element.style.color).toBe('green')
+
+      // Array.<Object.<string,string>>
+      let vm2 = await runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: [{ color: 'green' }, { margin: '5px' }] }"`)
+      expect(vm2.element.style.color).toBe('green')
+      expect(vm2.element.style.margin).toBe('5px')
+    })
   })
 })

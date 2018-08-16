@@ -72,6 +72,7 @@ function parseClasses (value) {
  * @param {{key: string, value: Object.<string, string>}) binding.value
  * @example
  * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
+ * <div v-feature-flipping:style="{ key: 'XXXXX', value: [{ style1: 'value1' }, { style2: 'value2' }] }">...</div>
  * <div v-feature-flipping:style.not="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
  * <div v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
  */
@@ -80,8 +81,23 @@ async function renderStyles (el, binding) {
   let {default: defaut, not = false} = binding.modifiers
 
   if (not ^ isEnabled(key, defaut)) {
-    for (let [styleName, styleValue] of Object.entries(value)) {
+    for (let [styleName, styleValue] of Object.entries(parseStyles(value))) {
       el.style.setProperty(styleName, styleValue)
     }
+  }
+}
+
+/**
+ * @param {Object.<string,string>|Array.<Object.<string,string>>} value
+ * @return {Object.<string,string>}
+ */
+function parseStyles (value) {
+  if (Array.isArray(value)) {
+    return value.map(it => parseStyles(it))
+      .reduce((it, merged) => Object.assign(merged, it), {}) // merge objects
+  } else if (typeof value === 'object') {
+    return value
+  } else {
+    throw new Error('Invalid parameter type')
   }
 }
