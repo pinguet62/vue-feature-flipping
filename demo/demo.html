@@ -62,4 +62,25 @@
             <code>&lt;div v-feature-flipping:style.default=&quot;{ key: 'FEAT', value: { color: 'green' } }&quot;&gt;</code>
         </div>
     </div>
+
+    <div>
+        <h2>Router Guard</h2>
+
+        <ul>
+            <li>
+                <router-link to="/simple">/simple</router-link>
+                <code>{featureFlipping: {key: 'FEAT'}}</code>
+            </li>
+            <li>
+                <router-link to="/not">/not</router-link>
+                <code>{featureFlipping: {key: 'FEAT', not: true}}</code>
+            </li>
+            <li>
+                <router-link to="/default">/default</router-link>
+                <code>{featureFlipping: {key: 'FEAT', default: true}}</code>
+            </li>
+        </ul>
+
+        <router-view></router-view>
+    </div>
 </div>
