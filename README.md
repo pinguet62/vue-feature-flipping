@@ -18,52 +18,50 @@ This plugin solve this problem.
 
 ## How it works?
 
-All feature flags (list of keys of type `string`) are stored into application.  
-This list is dynamically initialized at startup (by `init` config function).  
+All feature flags (list of keys of type `string`) are stored into plugin.  
+This list is dynamically initialized at startup (by `setEnabledFeatures()` function).  
 Components use this list to define if action can be done (DOM can be shown, route is accessible, ...).
 
-## Usage
+## Configuration
+
+### 1. NPM module
 
 Install NPM dependency:
+
 ```shell
 npm install --save vue-feature-flipping
 ```
 
-### Register plugin
+### 2. Plugin registration
+
+Register all Vue.js components (directive, guard, ...) calling `Vue.use()`:
 
 ```javascript
 import Vue from 'vue'
 import FeatureFlipping from 'vue-feature-flipping'
 
-Vue.use(FeatureFlipping, {
-    init: (consumer) => consumer([])
-})
+Vue.use(FeatureFlipping)
 ```
 
-### Feature list register
+### 3. Features list registration
 
-The `init` configuration field can be used to define the feature list.  
-The parameter is a consumer who accept a `string[]`.
- 
+The `setEnabledFeatures(string[])` function can be used to define the feature list.
+
 ```javascript
-Vue.use(FeatureFlipping, {
-    init: (consumer) => consumer(['FF1', 'FF2', 'FF3'])
-})
+import { setEnabledFeatures } from 'vue-feature-flipping'
+
+setEnabledFeatures(['FF1', 'FF2', 'FF3'])
 ```
 
 You can dynamically refresh the list, using `socket.io` or `setInterval` like this example:
 ```javascript
-Vue.use(FeatureFlipping, {
-    init: async (consumer) => {
-        setInterval(
-            async () => consumer(await getFeaturesFromBackend()),
-            60000
-        )
-    }
-})
+setInterval(
+    async () => setEnabledFeatures(await getFeaturesFromBackend('http://localhost:8081')),
+    60000
+)
 ```
 
-### Conditional feature
+### Usage
 
 #### Service
 
@@ -155,16 +153,12 @@ The **default value** defines this behavior: the value is used when plugin is no
 
 Example:
 ```javascript
-Vue.use(FeatureFlipping, {
-    init: async (consumer) => {
-        try {
-            let features = await getFeaturesFromBackend()
-            consumer(features)
-        } catch (e) {
-            consumer(null) // use default
-        }
-    }
-})
+try {
+    let features = await getFeaturesFromBackend()
+    setEnabledFeatures(features)
+} catch (e) {
+    setEnabledFeatures(null) // use default
+}
 ```
 
 ### `not`: reversed rendering

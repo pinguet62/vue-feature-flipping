@@ -4,10 +4,6 @@ import FeatureFlipping from '../src'
 describe('plugin', () => {
   it('Vue.use()', () => {
     const localVue = createLocalVue()
-    localVue.use(FeatureFlipping, {
-      init (consumer) {
-        consumer(['FF1', 'FF2', 'FF3'])
-      },
-    })
+    localVue.use(FeatureFlipping)
   })
 })

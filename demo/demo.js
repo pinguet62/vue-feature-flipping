@@ -1,18 +1,13 @@
 const isEnabled = VueFeatureFlipping.isEnabled // import { isEnabled } from 'vue-feature-flipping'
+const setEnabledFeatures = VueFeatureFlipping.setEnabledFeatures // import { setEnabledFeatures } from 'vue-feature-flipping'
 VueFeatureFlipping = VueFeatureFlipping.default // import VueFeatureFlipping from 'vue-feature-flipping'
-
-let setFeatures // for external update
 
 // ===== Plugin configuration =====
 
-Vue.use(VueFeatureFlipping, {
-  init (consumer) {
-    consumer(['FEAT']) // initial state
-    setFeatures = consumer // save to play with the lib
-  },
-})
+Vue.use(VueFeatureFlipping)
+setEnabledFeatures(['FEAT']) // initial state
 
-// ===== Guard demo =====
+// ===== Guard =====
 
 const router = new VueRouter({
   routes: [
@@ -36,8 +31,8 @@ var vm = new Vue({
   },
   methods: {
     isEnabled,
-    setFeatures (value) {
-      setFeatures(value)
+    setValue (value) {
+      setEnabledFeatures(value)
 
       // hack for refresh
       this.refresh = false
