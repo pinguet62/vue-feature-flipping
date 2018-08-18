@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/pinguet62/vue-feature-flipping.git"
   },
+  "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint --parser babel-eslint --config node_modules/eslint/conf/eslint-recommended.js \"src/**/*.js\"",
     "test": "jest --coverage",
