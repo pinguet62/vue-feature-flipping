@@ -6,7 +6,7 @@
     "feature flipping"
   ],
   "author": "Pinguet62 <pinguet62@gmail.com>",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/pinguet62/vue-feature-flipping.git"
