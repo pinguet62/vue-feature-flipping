@@ -10,18 +10,20 @@ describe('guard', () => {
     localVue.use(VueRouter)
     router = new VueRouter({
       routes: [
-        {path: '/', name: 'index', component: {render: () => 'index'}},
-        {path: '/undefined', name: 'undefined', component: {render: () => 'undefined'}},
-        {path: '/simple', name: 'simple', component: {render: () => 'simple'}, meta: {featureFlipping: {key: 'KEY'}}},
-        {path: '/not', name: 'not', component: {render: () => 'not'}, meta: {featureFlipping: {key: 'KEY', not: true}}},
-        {path: '/default', name: 'default', component: {render: () => 'default'}, meta: {featureFlipping: {key: 'KEY', default: true}}},
+        {path: '/', name: 'index', component: {template: ''}},
+        {path: '/undefined', name: 'undefined', component: {template: ''}},
+        {path: '/simple', name: 'simple', component: {template: ''}, meta: {featureFlipping: {key: 'KEY'}}},
+        {path: '/redirect/string', name: 'redirect_string', component: {template: ''}, meta: {featureFlipping: {key: 'KEY', redirect: '/undefined'}}},
+        {path: '/redirect/Location', name: 'redirect_Location', component: {template: ''}, meta: {featureFlipping: {key: 'KEY', redirect: {name: 'undefined'}}}},
+        {path: '/not', name: 'not', component: {template: ''}, meta: {featureFlipping: {key: 'KEY', not: true}}},
+        {path: '/default', name: 'default', component: {template: ''}, meta: {featureFlipping: {key: 'KEY', default: true}}},
       ],
     })
 
     localVue.use(FeatureFlipping) // define guard
   })
 
-  it('\'meta\' not defined: should accept route', async () => {
+  it('"meta" not defined: should accept route', async () => {
     router.push({name: 'undefined'})
     await localVue.nextTick()
 
@@ -45,6 +47,37 @@ describe('guard', () => {
       await localVue.nextTick()
 
       expect(router.history.current.path).toEqual('/')
+    })
+  })
+
+  describe('Option "redirect" should define the target route', () => {
+    it('By default should redirect to "/"', async () => {
+      setEnabledFeatures([])
+
+      router.push({name: 'simple'})
+      await localVue.nextTick()
+
+      expect(router.history.current.path).toEqual('/')
+    })
+
+    describe('Should support type "RedirectOption"', async () => {
+      it('"string"', async () => {
+        setEnabledFeatures([])
+
+        router.push({name: 'redirect_string'})
+        await localVue.nextTick()
+
+        expect(router.history.current.path).toEqual('/undefined')
+      })
+
+      it('"Location"', async () => {
+        setEnabledFeatures([])
+
+        router.push({name: 'redirect_Location'})
+        await localVue.nextTick()
+
+        expect(router.history.current.path).toEqual('/undefined')
+      })
     })
   })
 
