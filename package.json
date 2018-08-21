@@ -13,7 +13,7 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "lint": "eslint --parser babel-eslint --config node_modules/eslint/conf/eslint-recommended.js \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" \"tests/**/*.js\"",
     "test": "jest --coverage",
     "build": "webpack --mode production --output-library VueFeatureFlipping --output-library-target window",
     "prepublish": "npm run build"
