@@ -7,7 +7,7 @@ authors:
 resources:
   - https://unpkg.com/vue/dist/vue.js
   - https://unpkg.com/vue-router/dist/vue-router.js
-  - https://rawgit.com/pinguet62/vue-feature-flipping/master/dist/main.js
+  - https://cdn.jsdelivr.net/gh/pinguet62/vue-feature-flipping/dist/main.js
 js_wrap: d
 ...
 */
