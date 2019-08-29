@@ -61,7 +61,7 @@ describe('guard', () => {
       expect(router.history.current.path).toEqual('/')
     })
 
-    describe('Should support type "RedirectOption"', async () => {
+    describe('Should support type "RedirectOption"', () => {
       it('"string"', async () => {
         setEnabledFeatures([])
 
