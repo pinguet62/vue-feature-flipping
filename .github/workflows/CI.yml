@@ -26,6 +26,4 @@ jobs:
 
       - env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |
-          npm install --global codacy-coverage
-          cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN
+        run: cat ./coverage/lcov.info | npx codacy-coverage --token $CODACY_PROJECT_TOKEN
