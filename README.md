@@ -7,7 +7,7 @@
 
 [![GitHub Actions](https://github.com/pinguet62/vue-feature-flipping/workflows/CI/badge.svg?branch=master)](https://github.com/pinguet62/vue-feature-flipping/actions?query=workflow%3ACI+branch%3Amaster)
 
-[![Demo Badge](https://img.shields.io/badge/demo-JSFiddle-blue.svg)](http://jsfiddle.net/gh/get/library/pure/pinguet62/vue-feature-flipping/tree/master/demo)
+[![Demo Badge](https://img.shields.io/badge/demo-JSFiddle-blue.svg)](https://jsfiddle.net/gh/get/library/pure/pinguet62/vue-feature-flipping/tree/master/demo)
 
 [Vue.js](https://vuejs.org) plugin providing a set of components used to introduce ["feature flipping"](https://en.wikipedia.org/wiki/Feature_toggle) in your project.
 
