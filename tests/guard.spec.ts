@@ -1,11 +1,11 @@
-import 'babel-polyfill'; // fix "ReferenceError: regeneratorRuntime is not defined"
-import { createLocalVue } from '@vue/test-utils'
-import VueRouter from 'vue-router'
-import FeatureFlipping, { setEnabledFeatures } from '../src'
+import { createLocalVue } from '@vue/test-utils';
+import { VueConstructor } from 'vue';
+import VueRouter from 'vue-router';
+import FeatureFlipping, { setEnabledFeatures } from '../src';
 
 describe('guard', () => {
-  let localVue
-  let router
+  let localVue: VueConstructor;
+  let router: VueRouter;
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(VueRouter)
@@ -26,9 +26,8 @@ describe('guard', () => {
 
   it('"meta" not defined: should accept route', async () => {
     router.push({name: 'undefined'})
-    await localVue.nextTick()
 
-    expect(router.history.current.path).toEqual('/undefined')
+    expect((router as any).history.current.path).toEqual('/undefined')
   })
 
   describe('"meta" defined: should test using "isEnabled()"', () => {
@@ -36,18 +35,16 @@ describe('guard', () => {
       setEnabledFeatures(['KEY'])
 
       router.push({name: 'simple'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/simple')
+      expect((router as any).history.current.path).toEqual('/simple')
     })
 
     it('When disabled: should redirect to "/"', async () => {
       setEnabledFeatures([])
 
       router.push({name: 'simple'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/')
+      expect((router as any).history.current.path).toEqual('/')
     })
   })
 
@@ -56,9 +53,8 @@ describe('guard', () => {
       setEnabledFeatures([])
 
       router.push({name: 'simple'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/')
+      expect((router as any).history.current.path).toEqual('/')
     })
 
     describe('Should support type "RedirectOption"', () => {
@@ -66,18 +62,16 @@ describe('guard', () => {
         setEnabledFeatures([])
 
         router.push({name: 'redirect_string'})
-        await localVue.nextTick()
 
-        expect(router.history.current.path).toEqual('/undefined')
+        expect((router as any).history.current.path).toEqual('/undefined')
       })
 
       it('"Location"', async () => {
         setEnabledFeatures([])
 
         router.push({name: 'redirect_Location'})
-        await localVue.nextTick()
 
-        expect(router.history.current.path).toEqual('/undefined')
+        expect((router as any).history.current.path).toEqual('/undefined')
       })
     })
   })
@@ -87,18 +81,16 @@ describe('guard', () => {
       setEnabledFeatures(['KEY'])
 
       router.push({name: 'not'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/')
+      expect((router as any).history.current.path).toEqual('/')
     })
 
     it('When disabled: should accept route', async () => {
       setEnabledFeatures([])
 
       router.push({name: 'not'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/not')
+      expect((router as any).history.current.path).toEqual('/not')
     })
   })
 
@@ -107,18 +99,16 @@ describe('guard', () => {
       setEnabledFeatures(null)
 
       router.push({name: 'default'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/default')
+      expect((router as any).history.current.path).toEqual('/default')
     })
 
     it('When not defined: should redirect to "/"', async () => {
       setEnabledFeatures(null)
 
       router.push({name: 'simple'})
-      await localVue.nextTick()
 
-      expect(router.history.current.path).toEqual('/')
+      expect((router as any).history.current.path).toEqual('/')
     })
   })
 })

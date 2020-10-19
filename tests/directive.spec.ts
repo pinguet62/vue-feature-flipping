@@ -1,4 +1,3 @@
-import 'babel-polyfill'; // fix "ReferenceError: regeneratorRuntime is not defined"
 import { createLocalVue, mount } from '@vue/test-utils'
 import FeatureFlipping, { setEnabledFeatures } from '../src'
 

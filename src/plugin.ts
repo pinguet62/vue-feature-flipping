@@ -1,3 +1,4 @@
+import { VueConstructor } from 'vue';
 import { featureFlippingDirective } from './directive'
 import { featureFlippingGuard } from './guard'
 import { setEnabledFeatures } from './service'
@@ -10,7 +11,7 @@ import { setEnabledFeatures } from './service'
  *     init: (consumer) => consumer(['FF1', 'FF2', 'FF3'])
  * })
  */
-export function featureFlippingPluginInstall (vue, options) {
+export function featureFlippingPluginInstall (vue: VueConstructor, options) {
   options && options.init && options.init((it) => setEnabledFeatures(it))
   vue.directive('feature-flipping', featureFlippingDirective)
   vue.mixin({beforeRouteEnter: featureFlippingGuard})

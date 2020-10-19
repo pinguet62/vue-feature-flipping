@@ -1,5 +1,4 @@
-import { isEnabled } from './service'
-
+import { NavigationGuardNext, Route } from "vue-router";
 /**
  * @example
  * const router = new VueRouter({
@@ -11,12 +10,4 @@ import { isEnabled } from './service'
  *     ]
  * })
  */
-export async function featureFlippingGuard (to, from, next) {
-  if (to.meta.featureFlipping) {
-    let {key, redirect = '/', default: defaut, not} = to.meta.featureFlipping
-    if (not ^ !isEnabled(key, defaut)) {
-      return next(redirect)
-    }
-  }
-  return next()
-}
+export declare function featureFlippingGuard(to: Route, from: Route, next: NavigationGuardNext): Promise<void>;
