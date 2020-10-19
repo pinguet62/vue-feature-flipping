@@ -43,84 +43,45 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 import { isEnabled } from './service';
 export function featureFlippingDirective(el, binding, vnode) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _a = binding.arg;
-                    switch (_a) {
-                        case 'class': return [3 /*break*/, 1];
-                        case 'style': return [3 /*break*/, 3];
-                    }
-                    return [3 /*break*/, 5];
-                case 1: return [4 /*yield*/, renderClasses(el, binding)];
-                case 2:
-                    _b.sent();
-                    return [3 /*break*/, 7];
-                case 3: return [4 /*yield*/, renderStyles(el, binding)];
-                case 4:
-                    _b.sent();
-                    return [3 /*break*/, 7];
-                case 5: return [4 /*yield*/, renderDOM(el, binding, vnode)];
-                case 6:
-                    _b.sent();
-                    _b.label = 7;
-                case 7: return [2 /*return*/];
-            }
-        });
-    });
+    switch (binding.arg) {
+        case 'class':
+            return renderClasses(el, binding);
+        case 'style':
+            return renderStyles(el, binding);
+        default:
+            return renderDOM(el, binding, vnode);
+    }
 }
-/**
- * @example
- * <div v-feature-flipping="'XXXXX'">...</div>
- * <div v-feature-flipping.not="'XXXXX'">...</div>
- * <div v-feature-flipping.default="'XXXXX'">...</div>
- */
 function renderDOM(el, binding, vnode) {
     return __awaiter(this, void 0, void 0, function () {
-        var key, _a, defaut, _b, not;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var key, _a, defaut, _b, not, _c;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     key = binding.value;
                     _a = binding.modifiers, defaut = _a.default, _b = _a.not, not = _b === void 0 ? false : _b;
-                    if (!(not ^ !isEnabled(key, defaut))) return [3 /*break*/, 2];
-                    return [4 /*yield*/, vnode.context.$nextTick()
-                        // @ts-ignore
-                    ];
+                    if (!(not !== !isEnabled(key, defaut))) return [3 /*break*/, 3];
+                    _c = vnode.context;
+                    if (!_c) return [3 /*break*/, 2];
+                    return [4 /*yield*/, vnode.context.$nextTick()];
                 case 1:
-                    _c.sent();
-                    // @ts-ignore
-                    vnode.elm.remove();
-                    _c.label = 2;
-                case 2: return [2 /*return*/];
+                    _c = (_d.sent());
+                    _d.label = 2;
+                case 2:
+                    _c;
+                    vnode.elm && vnode.elm.parentElement && vnode.elm.parentElement.removeChild(vnode.elm);
+                    _d.label = 3;
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
-/**
- * @example
- * <div v-feature-flipping:class="{ key: 'XXXXX', value: 'class1' }">...</div>
- * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', class2'] }">...</div>
- * <div v-feature-flipping:class="{ key: 'XXXXX', value: { class1: active1 } }">...</div>
- * <div v-feature-flipping:class="{ key: 'XXXXX', value: ['class1', ['class2'], { class3: active3 }] }">...</div>
- * <div v-feature-flipping:class.not="{ key: 'XXXXX', value: 'class1' }">...</div>
- * <div v-feature-flipping:class.default="{ key: 'XXXXX', value: 'class1' }">...</div>
- */
 function renderClasses(el, binding) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, key, value, _b, defaut, _c, not;
-        return __generator(this, function (_d) {
-            _a = binding.value, key = _a.key, value = _a.value;
-            _b = binding.modifiers, defaut = _b.default, _c = _b.not, not = _c === void 0 ? false : _c;
-            // @ts-ignore
-            if (not ^ isEnabled(key, defaut)) {
-                el.className += ' ' + parseClasses(value).join(' ');
-            }
-            return [2 /*return*/];
-        });
-    });
+    var _a = binding.value, key = _a.key, value = _a.value;
+    var _b = binding.modifiers, defaut = _b.default, _c = _b.not, not = _c === void 0 ? false : _c;
+    if (not !== isEnabled(key, defaut)) {
+        el.className += ' ' + parseClasses(value).join(' ');
+    }
 }
 function parseClasses(value) {
     if (typeof value === 'string') {
@@ -145,21 +106,13 @@ function parseClasses(value) {
         throw new Error('Invalid parameter type');
     }
 }
-/**
- * @example
- * <div v-feature-flipping:style="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
- * <div v-feature-flipping:style="{ key: 'XXXXX', value: [{ style1: 'value1' }, { style2: 'value2' }] }">...</div>
- * <div v-feature-flipping:style.not="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
- * <div v-feature-flipping:style.default="{ key: 'XXXXX', value: { style1: 'value1', style2: 'value2' } }">...</div>
- */
 function renderStyles(el, binding) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, key, value, _b, defaut, _c, not, _i, _d, _e, styleName, styleValue;
         return __generator(this, function (_f) {
             _a = binding.value, key = _a.key, value = _a.value;
             _b = binding.modifiers, defaut = _b.default, _c = _b.not, not = _c === void 0 ? false : _c;
-            // @ts-ignore
-            if (not ^ isEnabled(key, defaut)) {
+            if (not !== isEnabled(key, defaut)) {
                 for (_i = 0, _d = Object.entries(parseStyles(value)); _i < _d.length; _i++) {
                     _e = _d[_i], styleName = _e[0], styleValue = _e[1];
                     el.style.setProperty(styleName, styleValue);

@@ -1,10 +1,8 @@
-import { VueConstructor } from 'vue';
-/**
- * @example
- * import Vue from 'vue'
- * import FeatureFlipping from './feature-flipping'
- * Vue.use(FeatureFlipping, {
- *     init: (consumer) => consumer(['FF1', 'FF2', 'FF3'])
- * })
- */
-export declare function featureFlippingPluginInstall(vue: VueConstructor, options: any): void;
+import Vue from 'vue';
+import { NavigationGuard } from 'vue-router';
+declare module 'vue/types/options' {
+    interface ComponentOptions<V extends Vue> {
+        beforeRouteEnter?: NavigationGuard<V>;
+    }
+}
+export declare function featureFlippingPluginInstall(vue: typeof Vue): void;
