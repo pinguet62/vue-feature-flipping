@@ -6,7 +6,7 @@
     "feature flipping"
   ],
   "author": "Pinguet62 <pinguet62@gmail.com>",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "main": "dist/vue-feature-flipping.umd.js",
   "module": "dist/vue-feature-flipping.esm.js",
   "unpkg": "dist/vue-feature-flipping.min.js",
