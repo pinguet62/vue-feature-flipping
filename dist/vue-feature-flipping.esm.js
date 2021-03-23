@@ -43,14 +43,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) { throw op[1]; } return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
-    var arguments$1 = arguments;
-
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) { s += arguments$1[i].length; }
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        { for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            { r[k] = a[j]; } }
-    return r;
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        { to[j] = from[i]; }
+    return to;
 };
 function featureFlippingDirective(el, binding, vnode) {
     switch (binding.arg) {
@@ -98,7 +94,7 @@ function parseClasses(value) {
     }
     else if (Array.isArray(value)) {
         return value.map(function (it) { return parseClasses(it); })
-            .reduce(function (acc, arr) { return __spreadArrays(acc, arr); }, []); // Array.flat()
+            .reduce(function (acc, arr) { return __spreadArray(__spreadArray([], acc), arr); }, []); // Array.flat()
     }
     else if (typeof value === 'object') {
         return Object.entries(value)
