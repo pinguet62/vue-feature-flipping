@@ -1,6 +1,5 @@
-var enabledFeatures = [];
-export function isEnabled(key, defaut) {
-    if (defaut === void 0) { defaut = false; }
+let enabledFeatures = [];
+export function isEnabled(key, defaut = false) {
     return enabledFeatures === null ? defaut : enabledFeatures.includes(key);
 }
 export function setEnabledFeatures(features) {

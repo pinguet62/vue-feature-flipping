@@ -1,16 +1,10 @@
-import Vue from 'vue'
-import {NavigationGuard} from 'vue-router'
+import {App, Plugin} from 'vue'
 import {featureFlippingDirective} from './directive'
 import {featureFlippingGuard} from './guard'
 
-// fix typing
-declare module 'vue/types/options' {
-    interface ComponentOptions<V extends Vue> {
-        beforeRouteEnter?: NavigationGuard<V>
+export const featureFlippingPlugin: Plugin = {
+    install(app: App) {
+        app.directive('feature-flipping', featureFlippingDirective)
+        app.mixin({beforeRouteEnter: featureFlippingGuard})
     }
-}
-
-export function featureFlippingPluginInstall(vue: typeof Vue) {
-    vue.directive('feature-flipping', featureFlippingDirective)
-    vue.mixin({beforeRouteEnter: featureFlippingGuard})
 }

@@ -1,8 +1,13 @@
-import { NavigationGuardNext, Route } from 'vue-router';
+import { NavigationGuard, RouteLocationRaw } from 'vue-router';
 export declare type MetaGuard = {
     key: string;
-    redirect?: string;
+    redirect?: RouteLocationRaw;
     default?: boolean;
     not?: boolean;
 };
-export declare function featureFlippingGuard(to: Route, from: Route, next: NavigationGuardNext): void;
+declare module 'vue-router' {
+    interface RouteMeta {
+        featureFlipping?: MetaGuard;
+    }
+}
+export declare const featureFlippingGuard: NavigationGuard;

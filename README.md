@@ -1,5 +1,7 @@
 # vue-feature-flipping
 
+:information_source: Vue 3 supported!
+
 [![Maintained](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg?style=flat)](https://github.com/pinguet62)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/70c3d26abe2047a3a6ca0183ec73421b)](https://app.codacy.com/app/pinguet62/vue-feature-flipping?utm_source=github.com&utm_medium=referral&utm_content=pinguet62/vue-feature-flipping&utm_campaign=badger)
@@ -38,13 +40,15 @@ npm install --save vue-feature-flipping
 
 ### 2. Plugin registration
 
-Register all Vue.js components (directive, guard, ...) calling `Vue.use()`:
+Register all Vue.js components (directive, guard, ...) calling `.use()`:
 
 ```javascript
 import Vue from 'vue'
 import FeatureFlipping from 'vue-feature-flipping'
 
-Vue.use(FeatureFlipping)
+createApp(...)
+  .use(FeatureFlipping)
+  .mount(...)
 ```
 
 ### 3. Features list registration
@@ -138,7 +142,7 @@ If the feature is not enabled, the router redirect to `"/"` route.
 import VueRouter from 'vue-router'
 import { Test1Component, Test2Component, Test3Component } from '...'
 
-new VueRouter({
+createRouter({
     routes: [
         { path: '/test1', component: Test1Component, meta: { featureFlipping: { key: 'XXXXX' } } },
         { path: '/test2', component: Test2Component, meta: { featureFlipping: { key: 'XXXXX' }, redirect: '/error' } },

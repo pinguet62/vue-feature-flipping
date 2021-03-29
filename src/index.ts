@@ -1,6 +1,6 @@
-import {featureFlippingPluginInstall} from './plugin'
+import {featureFlippingPlugin} from './plugin'
 
-export default featureFlippingPluginInstall
+export default featureFlippingPlugin
 export {isEnabled, setEnabledFeatures} from './service'
 
 export {MetaGuard} from './guard'

@@ -1,8 +1,8 @@
-import {VNode} from 'vue'
-import {DirectiveBinding} from 'vue/types/options'
+import {VNode, nextTick} from 'vue'
+import {Directive, DirectiveBinding} from '@vue/runtime-core'
 import {isEnabled} from './service'
 
-export function featureFlippingDirective(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
+export const featureFlippingDirective: Directive = (el: HTMLElement, binding: DirectiveBinding, vnode: VNode) => {
     switch (binding.arg) {
         case 'class':
             return renderClasses(el, binding)
@@ -20,8 +20,8 @@ async function renderDOM(el: HTMLElement, binding: DirectiveBinding, vnode: VNod
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 
     if (not !== !isEnabled(key, defaut)) {
-        vnode.context && await vnode.context.$nextTick()
-        vnode.elm && vnode.elm.parentElement && vnode.elm.parentElement.removeChild(vnode.elm)
+        await nextTick()
+        vnode.el && vnode.el.parentElement && vnode.el.parentElement.removeChild(vnode.el)
     }
 }
 

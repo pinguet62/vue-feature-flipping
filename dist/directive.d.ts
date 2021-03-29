@@ -1,3 +1,2 @@
-import { VNode } from 'vue';
-import { DirectiveBinding } from 'vue/types/options';
-export declare function featureFlippingDirective(el: HTMLElement, binding: DirectiveBinding, vnode: VNode): void | Promise<void>;
+import { Directive } from '@vue/runtime-core';
+export declare const featureFlippingDirective: Directive;

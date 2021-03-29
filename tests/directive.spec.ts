@@ -1,22 +1,16 @@
-import {createLocalVue, mount} from '@vue/test-utils'
-import Vue from 'vue'
+import {nextTick} from 'vue'
+import {mount} from '@vue/test-utils'
 import FeatureFlipping, {setEnabledFeatures} from '../src'
 
 describe('directive', () => {
-    let localVue: typeof Vue
-    beforeAll(() => {
-        localVue = createLocalVue()
-        localVue.use(FeatureFlipping) // define directive
-    })
-
     describe('render', () => {
         async function runTestAndExpectation(directive: string, shouldRender: boolean) {
             const DOM = 'content'
 
             const vm = mount(
                 {template: `<div><span ${directive}> ${DOM} </span></div>`},
-                {localVue})
-            await localVue.nextTick()
+                {global: {plugins: [FeatureFlipping]}})
+            await nextTick()
 
             if (shouldRender) {
                 expect(vm.html()).toContain(DOM)
@@ -51,8 +45,8 @@ describe('directive', () => {
         async function runTest(directive: string) {
             const vm = mount(
                 {template: `<div ${directive}></div>`},
-                {localVue})
-            await localVue.nextTick()
+                {global: {plugins: [FeatureFlipping]}})
+            await nextTick()
             return vm
         }
 
@@ -115,8 +109,8 @@ describe('directive', () => {
         async function runTest(directive: string) {
             const vm = mount(
                 {template: `<div ${directive}></div>`},
-                {localVue})
-            await localVue.nextTick()
+                {global: {plugins: [FeatureFlipping]}})
+            await nextTick()
             return vm
         }
 
@@ -124,33 +118,33 @@ describe('directive', () => {
             setEnabledFeatures(['ENABLED'])
 
             const vm1 = await runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green', margin: '5px' } }"`)
-            expect(vm1.element.style.color).toBe('green')
-            expect(vm1.element.style.margin).toBe('5px')
+            expect((vm1.element as HTMLDivElement).style.color).toBe('green')
+            expect((vm1.element as HTMLDivElement).style.margin).toBe('5px')
 
             const vm2 = await runTest(`v-feature-flipping:style="{ key: 'DISABLED', value: { display: 'none' } }"`)
-            expect(vm2.element.style.display).not.toBe('none')
+            expect((vm2.element as HTMLDivElement).style.display).not.toBe('none')
         })
 
         it('Should reverse rendering when ".not" modifier', async () => {
             setEnabledFeatures(['ENABLED'])
 
             const vm1 = await runTest(`v-feature-flipping:style.not="{ key: 'DISABLED', value: { color: 'green', margin: '5px' } }"`)
-            expect(vm1.element.style.color).toBe('green')
-            expect(vm1.element.style.margin).toBe('5px')
+            expect((vm1.element as HTMLDivElement).style.color).toBe('green')
+            expect((vm1.element as HTMLDivElement).style.margin).toBe('5px')
 
             const vm2 = await runTest(`v-feature-flipping:style.not="{ key: 'ENABLED', value: { display: 'none' } }"`)
-            expect(vm2.element.style.display).not.toBe('none')
+            expect((vm2.element as HTMLDivElement).style.display).not.toBe('none')
         })
 
         it('Should render when ".default" modifier', async () => {
             setEnabledFeatures(null)
 
             const vm1 = await runTest(`v-feature-flipping:style.default="{ key: 'ANY', value: { color: 'green', margin: '5px' } }"`)
-            expect(vm1.element.style.color).toBe('green')
-            expect(vm1.element.style.margin).toBe('5px')
+            expect((vm1.element as HTMLDivElement).style.color).toBe('green')
+            expect((vm1.element as HTMLDivElement).style.margin).toBe('5px')
 
             const vm2 = await runTest(`v-feature-flipping:style="{ key: 'ANY', value: { display: 'none' } }"`)
-            expect(vm2.element.style.display).not.toBe('none')
+            expect((vm2.element as HTMLDivElement).style.display).not.toBe('none')
         })
 
         it('Should support complex parameter ("v-bind:style" syntax)', async () => {
@@ -158,12 +152,12 @@ describe('directive', () => {
 
             // Object.<string,string>
             const vm1 = await runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green' } }"`)
-            expect(vm1.element.style.color).toBe('green')
+            expect((vm1.element as HTMLDivElement).style.color).toBe('green')
 
             // Array.<Object.<string,string>>
             const vm2 = await runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: [{ color: 'green' }, { margin: '5px' }] }"`)
-            expect(vm2.element.style.color).toBe('green')
-            expect(vm2.element.style.margin).toBe('5px')
+            expect((vm2.element as HTMLDivElement).style.color).toBe('green')
+            expect((vm2.element as HTMLDivElement).style.margin).toBe('5px')
         })
     })
 })
