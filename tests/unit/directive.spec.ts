@@ -1,6 +1,6 @@
 import {createLocalVue, mount} from '@vue/test-utils'
 import Vue from 'vue'
-import FeatureFlipping, {setEnabledFeatures} from '../src'
+import FeatureFlipping, {setEnabledFeatures} from '../../src'
 
 describe('directive', () => {
     let localVue: typeof Vue

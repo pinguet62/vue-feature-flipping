@@ -1,7 +1,7 @@
 import {createLocalVue} from '@vue/test-utils'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import FeatureFlipping, {setEnabledFeatures} from '../src'
+import FeatureFlipping, {setEnabledFeatures} from '../../src'
 
 describe('guard', () => {
     let localVue: typeof Vue

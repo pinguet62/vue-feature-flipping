@@ -1,5 +1,5 @@
 import {createLocalVue} from '@vue/test-utils'
-import FeatureFlipping from '../src'
+import FeatureFlipping from '../../src'
 
 describe('plugin', () => {
     it('Vue.use()', () => {

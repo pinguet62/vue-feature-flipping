@@ -1,5 +1,3 @@
 module.exports = {
-  transform: {
-    "^.+\\.ts$": "ts-jest"
-  }
+  preset: '@vue/cli-plugin-unit-jest/presets/typescript'
 }
