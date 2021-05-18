@@ -1,15 +1,12 @@
-const isEnabled = VueFeatureFlipping.isEnabled // import { isEnabled } from 'vue-feature-flipping'
-const setEnabledFeatures = VueFeatureFlipping.setEnabledFeatures // import { setEnabledFeatures } from 'vue-feature-flipping'
+const { createApp, nextTick } = Vue // import { createApp } from 'vue'
+const { createRouter, createWebHistory } = VueRouter // import { createRouter, createWebHistory } from 'vue-router'
+const { isEnabled, setEnabledFeatures } = VueFeatureFlipping // import { isEnabled, setEnabledFeatures } from 'vue-feature-flipping'
 VueFeatureFlipping = VueFeatureFlipping.default // import VueFeatureFlipping from 'vue-feature-flipping'
-
-// ===== Plugin configuration =====
-
-Vue.use(VueFeatureFlipping)
-setEnabledFeatures(['FEAT']) // initial state
 
 // ===== Guard =====
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {path: '/', component: {template: '<div>You are in "/"</div>'}},
     {path: '/simple', component: {template: '<div>You are in "/simple"</div>'}, meta: {featureFlipping: {key: 'FEAT'}}},
@@ -20,9 +17,8 @@ const router = new VueRouter({
 
 // ===== Demo =====
 
-var vm = new Vue({
-  el: '#app',
-  router,
+const App = {
+  template: document.getElementById("template").outerHTML,
   data () {
     return {
       featureEnabled: true,
@@ -36,7 +32,18 @@ var vm = new Vue({
 
       // hack for refresh
       this.refresh = false
-      Vue.nextTick(() => this.refresh = true)
+      nextTick(() => this.refresh = true)
     },
   },
-})
+}
+
+// ===== App configuration =====
+
+createApp(App)
+  .use(router)
+  .use(VueFeatureFlipping)
+  .mount('#app')
+
+// ===== Plugin configuration =====
+
+setEnabledFeatures(['FEAT']) // initial state
