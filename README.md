@@ -5,9 +5,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/70c3d26abe2047a3a6ca0183ec73421b)](https://app.codacy.com/app/pinguet62/vue-feature-flipping?utm_source=github.com&utm_medium=referral&utm_content=pinguet62/vue-feature-flipping&utm_campaign=badger)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/bdbafbe565e04d42ab67b5432980ea89)](https://www.codacy.com/app/pinguet62/vue-feature-flipping?utm_source=github.com&utm_medium=referral&utm_content=pinguet62/vue-feature-flipping&utm_campaign=Badge_Coverage)
 
-[![GitHub Actions](https://github.com/pinguet62/vue-feature-flipping/workflows/CI/badge.svg?branch=master)](https://github.com/pinguet62/vue-feature-flipping/actions?query=workflow%3ACI+branch%3Amaster)
+[![GitHub Actions](https://github.com/pinguet62/vue-feature-flipping/workflows/CI/badge.svg?branch=main)](https://github.com/pinguet62/vue-feature-flipping/actions?query=workflow%3ACI+branch%3Amain)
 
-[![Demo Badge](https://img.shields.io/badge/demo-JSFiddle-blue.svg)](https://jsfiddle.net/gh/get/library/pure/pinguet62/vue-feature-flipping/tree/master/demo)
+[![Demo Badge](https://img.shields.io/badge/demo-JSFiddle-blue.svg)](https://jsfiddle.net/gh/get/library/pure/pinguet62/vue-feature-flipping/tree/main/demo)
 
 [Vue.js](https://vuejs.org) plugin providing a set of components used to introduce ["feature flipping"](https://en.wikipedia.org/wiki/Feature_toggle) in your project.
 
