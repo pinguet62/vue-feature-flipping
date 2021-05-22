@@ -138,3 +138,4 @@
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
+console.log('vue-feature-flipping.umd4.js')
