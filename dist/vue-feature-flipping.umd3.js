@@ -1,4 +1,5 @@
 (function (global, factory) {
+  console.log('function (global, factory)')
   if (typeof exports === 'object' && typeof module !== 'undefined') {
     console.log('if1')
     factory(exports, require('vue'))
@@ -7,13 +8,15 @@
     define(['exports', 'vue'], factory)
   } else {
     console.log('else3')
-    global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}, global.vue)
+    global = typeof globalThis !== 'undefined' ? globalThis : global || self
+    factory(global.VueFeatureFlipping = {}, global.vue)
   }
 
     // typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
     // typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
     // (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}, global.vue));
 }(this, (function (exports, vue) { 'use strict';
+  console.log('function (exports, vue)')
 
     var enabledFeatures = [];
     function isEnabled(key, defaut) {

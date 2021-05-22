@@ -6,6 +6,6 @@ authors:
 resources:
   - https://unpkg.com/vue@3.0.11/dist/vue.global.js
   - https://unpkg.com/vue-router@4.0.8/dist/vue-router.global.js
-  - https://cdn.jsdelivr.net/gh/pinguet62/vue-feature-flipping@main/dist/vue-feature-flipping.umd2.js
+  - https://cdn.jsdelivr.net/gh/pinguet62/vue-feature-flipping@main/dist/vue-feature-flipping.umd3.js
 js_wrap: d
 ...
