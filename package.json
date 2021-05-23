@@ -20,9 +20,9 @@
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
     "build": "rimraf dist && tsc && npm run build:umd && npm run build:es && npm run build:unpkg",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/vue-feature-flipping.umd.js",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/vue-feature-flipping.esm.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/vue-feature-flipping.min.js",
+    "build:umd": "rollup --config rollup.config.js --format umd -g vue:Vue --file dist/vue-feature-flipping.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es -g vue:Vue --file dist/vue-feature-flipping.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife -g vue:Vue --file dist/vue-feature-flipping.min.js",
     "prepublish": "npm run build"
   },
   "devDependencies": {
