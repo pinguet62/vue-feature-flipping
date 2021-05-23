@@ -1,5 +1,5 @@
 (function (global, factory) {
-  console.log('function (global, factory)')
+  console.log('function (global, factory)', global, factory)
   if (typeof exports === 'object' && typeof module !== 'undefined') {
     console.log('if1')
     factory(exports, require('vue'))
