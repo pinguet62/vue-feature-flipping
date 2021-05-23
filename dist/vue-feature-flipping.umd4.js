@@ -16,7 +16,7 @@
     // typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
     // (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}, global.vue));
 }(this, (function (exports, vue) { 'use strict';
-  console.log('function (exports, vue)')
+  console.log('function (exports, vue)', exports, vue)
 
     var enabledFeatures = [];
     function isEnabled(key, defaut) {
