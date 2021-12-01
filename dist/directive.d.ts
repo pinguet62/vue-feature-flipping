@@ -1,4 +1,7 @@
 import { Directive } from '@vue/runtime-core';
-declare type FeatureFlippingEl<T = HTMLElement> = T;
+import { onFeaturesChanged } from './service';
+declare type FeatureFlippingEl<T = HTMLElement> = T & {
+    unWatch?: ReturnType<typeof onFeaturesChanged>;
+};
 export declare const featureFlippingDirective: Directive<FeatureFlippingEl>;
 export {};

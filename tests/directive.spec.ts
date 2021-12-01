@@ -1,20 +1,33 @@
-import {mount} from '@vue/test-utils'
+import {nextTick} from 'vue'
+import {mount, VueWrapper} from '@vue/test-utils'
 import FeatureFlipping, {setEnabledFeatures} from '../src'
 
 describe('directive', () => {
     describe('render', () => {
-        function runTestAndExpectation(directive: string, shouldRender: boolean) {
-            const DOM = 'content'
+        let vm: VueWrapper<any>
 
-            const vm = mount(
-                {template: `<div><span ${directive}> ${DOM} </span></div>`},
-                {global: {plugins: [FeatureFlipping]}})
+        function runTestAndExpectation(directive: string, shouldRender: boolean) {
+            runTest(directive)
 
             if (shouldRender) {
-                expect(vm.html()).toContain(DOM)
+                expectIsRendered()
             } else {
-                expect(vm.html()).not.toContain(DOM)
+                expectIsHidden()
             }
+        }
+
+        function runTest(directive: string) {
+            vm = mount(
+                {template: `<div><span ${directive}>content</span></div>`},
+                {global: {plugins: [FeatureFlipping]}})
+        }
+
+        function expectIsRendered() {
+            expect(vm.html()).toContain('content')
+        }
+
+        function expectIsHidden() {
+            expect(vm.html()).not.toContain('content')
         }
 
         it('Should render DOM according to the "isEnabled" result', () => {
@@ -36,6 +49,38 @@ describe('directive', () => {
 
             runTestAndExpectation(`v-feature-flipping="'ANY'"`, false)
             runTestAndExpectation(`v-feature-flipping.default="'ANY'"`, true)
+        })
+
+        describe('Should be reactive', () => {
+            it('off/on/off', async () => {
+                setEnabledFeatures(null)
+
+                runTest(`v-feature-flipping="'ENABLED'"`)
+                expectIsHidden()
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expectIsRendered()
+
+                setEnabledFeatures([])
+                await nextTick()
+                expectIsHidden()
+            })
+
+            it('on/off/on', async () => {
+                setEnabledFeatures(['ENABLED'])
+
+                runTest(`v-feature-flipping="'ENABLED'"`)
+                expectIsRendered()
+
+                setEnabledFeatures([])
+                await nextTick()
+                expectIsHidden()
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expectIsRendered()
+            })
         })
     })
 
@@ -100,6 +145,38 @@ describe('directive', () => {
             expect(vm4.classes()).toContain('BBBBB')
             expect(vm4.classes()).toContain('CCCCC')
         })
+
+        describe('Should be reactive', () => {
+            it('off/on/off', async () => {
+                setEnabledFeatures(null)
+
+                const vm = runTest(`v-feature-flipping:class="{ key: 'ENABLED', value: {'XXXXX': true} }"`)
+                expect(vm.classes()).not.toContain('XXXXX')
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expect(vm.classes()).toContain('XXXXX')
+
+                setEnabledFeatures(null)
+                await nextTick()
+                expect(vm.classes()).not.toContain('XXXXX')
+            })
+
+            it('on/off/on', async () => {
+                setEnabledFeatures(['ENABLED'])
+
+                const vm = runTest(`v-feature-flipping:class="{ key: 'ENABLED', value: {'XXXXX': true} }"`)
+                expect(vm.classes()).toContain('XXXXX')
+
+                setEnabledFeatures(null)
+                await nextTick()
+                expect(vm.classes()).not.toContain('XXXXX')
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expect(vm.classes()).toContain('XXXXX')
+            })
+        })
     })
 
     describe('style', () => {
@@ -154,6 +231,38 @@ describe('directive', () => {
             const vm2 = runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: [{ color: 'green' }, { margin: '5px' }] }"`)
             expect((vm2.element as HTMLDivElement).style.color).toBe('green')
             expect((vm2.element as HTMLDivElement).style.margin).toBe('5px')
+        })
+
+        describe('Should be reactive', () => {
+            it('off/on/off', async () => {
+                setEnabledFeatures(null)
+
+                const vm = runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green', margin: '5px' } }"`)
+                expect((vm.element as HTMLDivElement).style.color).not.toBe('green')
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expect((vm.element as HTMLDivElement).style.color).toBe('green')
+
+                setEnabledFeatures(null)
+                await nextTick()
+                expect((vm.element as HTMLDivElement).style.color).not.toBe('green')
+            })
+
+            it('on/off/on', async () => {
+                setEnabledFeatures(['ENABLED'])
+
+                const vm = runTest(`v-feature-flipping:style="{ key: 'ENABLED', value: { color: 'green' } }"`)
+                expect((vm.element as HTMLDivElement).style.color).toBe('green')
+
+                setEnabledFeatures(null)
+                await nextTick()
+                expect((vm.element as HTMLDivElement).style.color).not.toBe('green')
+
+                setEnabledFeatures(['ENABLED'])
+                await nextTick()
+                expect((vm.element as HTMLDivElement).style.color).toBe('green')
+            })
         })
     })
 })
