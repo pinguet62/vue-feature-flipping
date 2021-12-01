@@ -1,2 +1,4 @@
 import { Directive } from '@vue/runtime-core';
-export declare const featureFlippingDirective: Directive;
+declare type FeatureFlippingEl<T = HTMLElement> = T;
+export declare const featureFlippingDirective: Directive<FeatureFlippingEl>;
+export {};

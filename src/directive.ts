@@ -1,8 +1,10 @@
-import {VNode, nextTick} from 'vue'
+import {nextTick, VNode} from 'vue'
 import {Directive, DirectiveBinding} from '@vue/runtime-core'
 import {isEnabled} from './service'
 
-export const featureFlippingDirective: Directive = (el: HTMLElement, binding: DirectiveBinding, vnode: VNode) => {
+type FeatureFlippingEl<T = HTMLElement> = T;
+
+export const featureFlippingDirective: Directive<FeatureFlippingEl> = (el, binding, vnode) => {
     switch (binding.arg) {
         case 'class':
             return renderClasses(el, binding)
@@ -15,7 +17,7 @@ export const featureFlippingDirective: Directive = (el: HTMLElement, binding: Di
 
 type Modifiers = { default?: boolean, not?: boolean }
 
-async function renderDOM(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
+async function renderDOM(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveDOM>, vnode: VNode) {
     const key = binding.value
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 
@@ -25,8 +27,10 @@ async function renderDOM(el: HTMLElement, binding: DirectiveBinding, vnode: VNod
     }
 }
 
-function renderClasses(el: HTMLElement, binding: DirectiveBinding) {
-    const {key, value} = binding.value as DirectiveClass
+type DirectiveDOM = string
+
+function renderClasses(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveClass>) {
+    const {key, value} = binding.value
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 
     if (not !== isEnabled(key, defaut)) {
@@ -55,8 +59,8 @@ function parseClasses(value: VueClass): VueClassItem[] {
     }
 }
 
-async function renderStyles(el: HTMLElement, binding: DirectiveBinding) {
-    const {key, value} = binding.value as DirectiveStyle
+async function renderStyles(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveStyle>) {
+    const {key, value} = binding.value
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 
     if (not !== isEnabled(key, defaut)) {
