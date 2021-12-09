@@ -1,29 +1,27 @@
-import {nextTick, VNode} from 'vue'
 import {Directive, DirectiveBinding} from '@vue/runtime-core'
 import {isEnabled} from './service'
 
 type FeatureFlippingEl<T = HTMLElement> = T;
 
-export const featureFlippingDirective: Directive<FeatureFlippingEl> = (el, binding, vnode) => {
+export const featureFlippingDirective: Directive<FeatureFlippingEl> = (el, binding) => {
     switch (binding.arg) {
         case 'class':
             return renderClasses(el, binding)
         case 'style':
             return renderStyles(el, binding)
         default:
-            return renderDOM(el, binding, vnode)
+            return renderDOM(el, binding)
     }
 }
 
 type Modifiers = { default?: boolean, not?: boolean }
 
-async function renderDOM(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveDOM>, vnode: VNode) {
+function renderDOM(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveDOM>) {
     const key = binding.value
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 
     if (not !== !isEnabled(key, defaut)) {
-        await nextTick()
-        vnode.el && vnode.el.parentElement && vnode.el.parentElement.removeChild(vnode.el)
+        el.parentElement && el.parentElement.removeChild(el)
     }
 }
 
@@ -59,7 +57,7 @@ function parseClasses(value: VueClass): VueClassItem[] {
     }
 }
 
-async function renderStyles(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveStyle>) {
+function renderStyles(el: FeatureFlippingEl, binding: DirectiveBinding<DirectiveStyle>) {
     const {key, value} = binding.value
     const {default: defaut, not = false} = binding.modifiers as Modifiers
 

@@ -1,5 +1,3 @@
-import { nextTick } from 'vue';
-
 var enabledFeatures = [];
 function isEnabled(key, defaut) {
     if ( defaut === void 0 ) defaut = false;
@@ -10,24 +8,23 @@ function setEnabledFeatures(features) {
     enabledFeatures = features;
 }
 
-var featureFlippingDirective = function (el, binding, vnode) {
+var featureFlippingDirective = function (el, binding) {
     switch (binding.arg) {
         case 'class':
             return renderClasses(el, binding);
         case 'style':
             return renderStyles(el, binding);
         default:
-            return renderDOM(el, binding, vnode);
+            return renderDOM(el, binding);
     }
 };
-async function renderDOM(el, binding, vnode) {
+function renderDOM(el, binding) {
     var key = binding.value;
     var ref = binding.modifiers;
     var defaut = ref.default;
     var not = ref.not; if ( not === void 0 ) not = false;
     if (not !== !isEnabled(key, defaut)) {
-        await nextTick();
-        vnode.el && vnode.el.parentElement && vnode.el.parentElement.removeChild(vnode.el);
+        el.parentElement && el.parentElement.removeChild(el);
     }
 }
 function renderClasses(el, binding) {
@@ -66,7 +63,7 @@ function parseClasses(value) {
         throw new Error('Invalid parameter type');
     }
 }
-async function renderStyles(el, binding) {
+function renderStyles(el, binding) {
     var ref = binding.value;
     var key = ref.key;
     var value = ref.value;
