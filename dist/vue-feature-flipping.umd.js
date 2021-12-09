@@ -1,17 +1,18 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}));
-}(this, (function (exports) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}, global.vue));
+}(this, (function (exports, vue) { 'use strict';
 
-    var enabledFeatures = [];
+    var enabledFeatures = vue.ref(null);
     function isEnabled(key, defaut) {
         if ( defaut === void 0 ) defaut = false;
 
-        return enabledFeatures === null ? defaut : enabledFeatures.includes(key);
+        var keys = enabledFeatures.value;
+        return keys === null ? defaut : keys.includes(key);
     }
     function setEnabledFeatures(features) {
-        enabledFeatures = features;
+        enabledFeatures.value = features;
     }
 
     var featureFlippingDirective = function (el, binding) {

@@ -1,9 +1,18 @@
-let enabledFeatures: string[] | null = []
+import {ref, watch} from 'vue';
+
+const enabledFeatures = ref<string[] | null>(null);
 
 export function isEnabled(key: string, defaut = false) {
-    return enabledFeatures === null ? defaut : enabledFeatures.includes(key)
+    const keys = enabledFeatures.value
+    return keys === null ? defaut : keys.includes(key)
 }
 
 export function setEnabledFeatures(features: string[] | null) {
-    enabledFeatures = features
+    enabledFeatures.value = features
+}
+
+export function onFeaturesChanged(handler: () => void) {
+    return watch(enabledFeatures, (from, to) => {
+        handler()
+    })
 }

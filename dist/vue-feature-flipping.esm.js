@@ -1,11 +1,14 @@
-var enabledFeatures = [];
+import { ref } from 'vue';
+
+var enabledFeatures = ref(null);
 function isEnabled(key, defaut) {
     if ( defaut === void 0 ) defaut = false;
 
-    return enabledFeatures === null ? defaut : enabledFeatures.includes(key);
+    var keys = enabledFeatures.value;
+    return keys === null ? defaut : keys.includes(key);
 }
 function setEnabledFeatures(features) {
-    enabledFeatures = features;
+    enabledFeatures.value = features;
 }
 
 var featureFlippingDirective = function (el, binding) {
