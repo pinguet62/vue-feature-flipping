@@ -26,20 +26,20 @@
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@typescript-eslint/eslint-plugin": "^4.24.0",
-    "@typescript-eslint/parser": "^4.24.0",
-    "@vue/test-utils": "^2.0.0-rc.6",
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "@vue/test-utils": "^2.0.0-rc.17",
     "codacy-coverage": "^3.4.0",
-    "eslint": "^7.26.0",
-    "jest": "^26.6.3",
-    "rollup": "^2.48.0",
+    "eslint": "^8.4.1",
+    "jest": "^27.4.4",
+    "rollup": "^2.61.0",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
-    "ts-jest": "^26.5.6",
-    "typescript": "^4.2.4",
-    "vue": "^3.0.11",
-    "vue-router": "^4.0.8",
-    "vue-template-compiler": "^2.6.12"
+    "ts-jest": "^27.1.1",
+    "typescript": "^4.5.3",
+    "vue": "^3.2.24",
+    "vue-router": "^4.0.12",
+    "vue-template-compiler": "^2.6.14"
   }
 }

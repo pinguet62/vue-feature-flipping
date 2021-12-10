@@ -152,5 +152,4 @@ var featureFlippingPlugin = {
     }
 };
 
-export default featureFlippingPlugin;
-export { isEnabled, setEnabledFeatures };
+export { featureFlippingPlugin as default, isEnabled, setEnabledFeatures };

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
     typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.VueFeatureFlipping = {}, global.vue));
-}(this, (function (exports, vue) { 'use strict';
+})(this, (function (exports, vue) { 'use strict';
 
     var enabledFeatures = vue.ref(null);
     function isEnabled(key, defaut) {
@@ -156,10 +156,10 @@
         }
     };
 
-    exports.default = featureFlippingPlugin;
+    exports["default"] = featureFlippingPlugin;
     exports.isEnabled = isEnabled;
     exports.setEnabledFeatures = setEnabledFeatures;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
