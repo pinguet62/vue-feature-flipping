@@ -170,6 +170,21 @@ try {
 }
 ```
 
+To define the **default behavior** globally you can call the function `setUnknownFeatureState`
+
+```js
+import { isEnabled, setEnabledFeatures, setUnknownFeatureState } from 'vue-feature-flipping'
+setUnknownFeatureState(true);
+
+setEnabledFeatures(['FF1', 'FF3'])
+
+isEnabled('FF1') // returns true cause the flag is here
+isEnabled('FF1', false) // returns true the flag is here
+isEnabled('FF2') // returns true cause the default behavior is true du to the previous setUnknownFeatureState calls
+isEnabled('FF2', false) // returns false cause the default behavior is passed as second argument
+
+```
+
 ### `not`: reversed rendering
 
 In some cases, we have to define a behavior when the feature is disabled.
